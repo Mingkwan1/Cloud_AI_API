@@ -13,4 +13,5 @@ chain = prompt | llm
 
 def get_answer(query):
     result = chain.invoke(input=query)
-    return result.strip()
+    print(result)
+    return result
