@@ -12,5 +12,5 @@ llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0.2)
 chain = prompt | llm
 
 def get_answer(query):
-    result = chain.invoke(query=query)
+    result = chain.invoke(input=query)
     return result.strip()
