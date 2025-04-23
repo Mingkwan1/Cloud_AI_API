@@ -1,5 +1,4 @@
-from langchain_community.chat_models import ChatOpenAI
-from langchain.chains import LLMChain
+from langchain_openai import ChatOpenAI
 from langchain.prompts import PromptTemplate
 
 template = """Answer the following question as best as you can:
@@ -10,7 +9,7 @@ prompt = PromptTemplate.from_template(template)
 
 llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0.2)
 
-chain = LLMChain(llm=llm, prompt=prompt)
+chain = prompt | llm
 
 def get_answer(query):
     result = chain.run(query=query)
