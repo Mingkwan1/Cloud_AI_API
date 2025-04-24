@@ -6,9 +6,9 @@ WORKDIR /app
 
 # Copy the requirements file into the container
 COPY requirements.txt .
-COPY app/ ./app
+COPY . .
 
 # Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r app/requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-CMD ["python3", "-u", "app/handler.py"]
+CMD ["python3", "-u", "handler.py"]
