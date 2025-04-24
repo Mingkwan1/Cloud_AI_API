@@ -6,7 +6,7 @@ from fastapi.staticfiles import StaticFiles
 
 from app.llm import get_answer
 
-import uvicorn
+# import uvicorn
 import traceback
 
 app = FastAPI()
@@ -33,5 +33,5 @@ async def ask_question(request: QueryRequest):
         print("Error details:", error_details)  # Prints full traceback to the log
         raise HTTPException(status_code=500, detail=str(e))
 
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
+# if __name__ == "__main__":
+#     uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
