@@ -1,8 +1,8 @@
 import runpod
 from llm import get_answer
 
-print(">>> handler.py loaded ✅")
 
+print(">>> handler.py loaded ✅")
 def handler(event):
     """
     This function processes incoming requests to your Serverless endpoint.
@@ -14,6 +14,7 @@ def handler(event):
         Any: The result to be returned to the client
     """
     
+    print(">>> handler.py called ✅")
     # Extract input data
     print(f"Worker Start")
     input = event['input']

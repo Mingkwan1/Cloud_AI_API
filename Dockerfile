@@ -1,6 +1,6 @@
 # Use an official Python runtime as a parent image
 # FROM nvidia/cuda:12.1-runtime-ubuntu22.04
-FROM python:3.10-slim
+FROM python:3.9-slim
 
 # Set the working directory in the container
 WORKDIR /app
