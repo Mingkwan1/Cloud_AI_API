@@ -2,4 +2,3 @@ langchain
 langchain-openai
 openai
 runpod
-pydantic

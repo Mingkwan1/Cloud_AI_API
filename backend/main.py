@@ -1,15 +1,8 @@
 from fastapi import FastAPI, HTTPException, Request
-from pydantic import BaseModel
 from dotenv import load_dotenv
-from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 import httpx
-
-from app.llm import get_answer
-
-# import uvicorn
-import traceback
 
 app = FastAPI()
 
@@ -50,5 +43,6 @@ async def ask(request: Request):
         result = response.json()
 
     return result
+
 # if __name__ == "__main__":
 #     uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
