@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -12,5 +12,66 @@
     <input type="text" id="query" placeholder="Type your question..." />
     <button onclick="sendQuery()">Send</button>
   <script src="frontend/script.js"></script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            padding: 20px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .response {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e2e2e2;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Chat with AI</h1>
+    <form id="chat-form">
+        <input type="text" id="user-input" placeholder="Ask me something..." required />
+        <button type="submit">Send</button>
+    </form>
+
+    <div id="response-container" class="response"></div>
+
+    <script>
+        const form = document.getElementById('chat-form');
+        const userInput = document.getElementById('user-input');
+        const responseContainer = document.getElementById('response-container');
+
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            const prompt = userInput.value;
+
+            // Send request to FastAPI /ask endpoint
+            const response = await fetch('/ask', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ prompt }),
+            });
+
+            const data = await response.json();
+
+            // Display AI response
+            responseContainer.innerHTML = `<strong>AI says:</strong> ${data.answer}`;
+        };
+    </script>
+
 </body>
 </html>

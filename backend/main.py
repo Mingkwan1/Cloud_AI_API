@@ -1,6 +1,8 @@
 from fastapi import FastAPI, HTTPException, Request
 from dotenv import load_dotenv
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import HTMLResponse
+from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 import httpx
 
@@ -22,8 +24,20 @@ app.add_middleware(
 # Set the URL for your Runpod Serverless API endpoint
 RUNPOD_URL = "https://api.runpod.ai/v2/obhiuyqj2cpkhy/run"  # Replace YOUR_RUNPOD_ID
 
-@app.post("/api/ask")
-async def ask(request: Request):
+# Serve index.html on root
+@app.get("/", response_class=HTMLResponse)
+async def read_root():
+    with open("frontend/index.html") as f:
+        content = f.read()
+    return content
+
+
+# Define request and response model for sending a query to Runpod
+class QueryRequest(BaseModel):
+    prompt: str
+
+@app.post("/ask")
+async def ask(request: QueryRequest):
     """
     Endpoint that receives a user query, forwards it to Runpod model,
     and returns the model's response.
@@ -34,15 +48,13 @@ async def ask(request: Request):
     Returns:
         dict: The response from the model (Runpod).
     """
-    data = await request.json()
-    prompt = data.get("prompt", "")
-    
+    headers = {"Content-Type": "application/json"}
     # Send the request to Runpod serverless function (model API)
     async with httpx.AsyncClient() as client:
-        response = await client.post(RUNPOD_URL, json={"input": {"prompt": prompt}})
-        result = response.json()
+        response = await client.post(RUNPOD_URL, json={"input": {"prompt": request.prompt}}, headers=headers)
 
-    return result
+    # Return the response from Runpod
+    return {"answer": response.json()}
 
 # if __name__ == "__main__":
 #     uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
