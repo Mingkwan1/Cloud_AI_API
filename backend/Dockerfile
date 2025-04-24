@@ -1,5 +1,4 @@
 # Use an official Python runtime as a parent image
-# FROM nvidia/cuda:12.1-runtime-ubuntu22.04
 FROM python:3.9-slim
 
 # Set the working directory in the container
@@ -7,18 +6,16 @@ WORKDIR /app
 
 # Copy the requirements file into the container
 COPY requirements.txt .
-COPY app/ ./app
+COPY backend/ ./backend
 
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the current directory contents into the container at /app
-# COPY . .
+COPY . .
 
 # Expose port 8000 for FastAPI
 EXPOSE 8000   
 
 # Run FastAPI
-# CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
-
-CMD ["python3", "-u", "app/handler.py"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]

@@ -27,7 +27,6 @@ def handler(event):
     
     # You can replace this sleep call with your Python function to generate images, text, or run any machine learning workload
     result = get_answer(prompt)
-    print(result)
     return result 
 
 # Start the Serverless function when the script is run
