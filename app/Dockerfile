@@ -10,6 +10,6 @@ COPY app/requirements.txt .
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+COPY app/ .
 
 CMD ["python3", "-u", "handler.py"]
