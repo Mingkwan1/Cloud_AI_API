@@ -1,6 +1,8 @@
 import runpod
 from llm import get_answer
 
+print(">>> handler.py loaded ✅")
+
 def handler(event):
     """
     This function processes incoming requests to your Serverless endpoint.
