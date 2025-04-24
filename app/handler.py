@@ -1,5 +1,5 @@
 import runpod
-from app.llm import get_answer
+from llm import get_answer
 
 
 print(">>> handler.py loaded ✅")
