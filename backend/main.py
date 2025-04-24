@@ -33,11 +33,11 @@ async def read_root():
 
 
 # Define request and response model for sending a query to Runpod
-class QueryRequest(BaseModel):
+class Prompt(BaseModel):
     prompt: str
 
 @app.post("/ask")
-async def ask(request: QueryRequest):
+async def ask(prompt: Prompt):
     """
     Endpoint that receives a user query, forwards it to Runpod model,
     and returns the model's response.
@@ -49,12 +49,25 @@ async def ask(request: QueryRequest):
         dict: The response from the model (Runpod).
     """
     headers = {"Content-Type": "application/json"}
+    payload = {"input": {"prompt": prompt.prompt}}
     # Send the request to Runpod serverless function (model API)
     async with httpx.AsyncClient() as client:
-        response = await client.post(RUNPOD_URL, json={"input": {"prompt": request.prompt}}, headers=headers)
+        res = await client.post(RUNPOD_URL, json=payload, headers=headers)
+    if res.status_code != 200:
+        return {
+            "error": f"Runpod call failed",
+            "status_code": res.status_code,
+            "text": res.text  # return raw response for debugging
+        }
 
-    # Return the response from Runpod
-    return {"answer": response.json()}
+    try:
+        return {"answer": res.json()}
+    except Exception as e:
+        return {
+            "error": "Could not decode Runpod response",
+            "response_text": res.text,
+            "exception": str(e)
+        }
 
 # if __name__ == "__main__":
 #     uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
