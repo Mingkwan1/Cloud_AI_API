@@ -27,7 +27,7 @@ app.add_middleware(
 )
 
 # Set the URL for your Runpod Serverless API endpoint
-RUNPOD_URL = "https://api.runpod.ai/v2/YOUR_RUNPOD_ID/run"  # Replace YOUR_RUNPOD_ID
+RUNPOD_URL = "https://api.runpod.ai/v2/obhiuyqj2cpkhy/run"  # Replace YOUR_RUNPOD_ID
 
 @app.post("/api/ask")
 async def ask(request: Request):
