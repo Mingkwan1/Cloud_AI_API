@@ -31,7 +31,8 @@ def handler(event):
         return result 
     except Exception as e:
         print(f"Error in handler: {str(e)}")
-        raise e  # Ensure the error gets captured
+        print(f"CRITICAL: {str(e)}", flush=True)  # Visible in RunPod logs
+        raise # Ensure the error gets captured
 # Start the Serverless function when the script is run
 if __name__ == '__main__':
     print("🔧 Starting serverless handler...")
