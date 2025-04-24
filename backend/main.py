@@ -61,6 +61,9 @@ async def ask(prompt: Prompt):
         }
 
     try:
+        print(res)
+        print(type(res))
+
         return {"answer": res.json()}
     except Exception as e:
         return {
